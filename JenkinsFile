@@ -1,6 +1,6 @@
 node('dockerhost') {
     GIT_BRANCH = 'master'
-    GIT_URL = 'git@github.com:Irdeto-Jenkins2/JenkinsDocker.git'
+    GIT_URL = 'https://github.com/Irdeto-Jenkins2/JenkinsDocker.git'
 
     def version = "${MAJOR}.${MINOR}.${PATCH}.${env.BUILD_NUMBER}"
 
