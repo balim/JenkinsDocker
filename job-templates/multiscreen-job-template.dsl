@@ -7,12 +7,13 @@ workflowJob('#{JOB_NAME}') {
                     remote {
                         name('origin')
                         url('#{JOB_GIT_URL}')
-                        credentials('GitLabCredentials')
                     }
                     extensions {
                         wipeOutWorkspace()
                     }
-                    branch('${GIT_BRANCH}')
+                    // https://issues.jenkins-ci.org/browse/JENKINS-33719
+                    //branch('${GIT_BRANCH}')
+                    branch('master')
                 }
             }
         }
@@ -38,12 +39,10 @@ workflowJob('#{JOB_NAME_BRANCH}') {
                     remote {
                         name('origin')
                         url('#{JOB_GIT_URL}')
-                        credentials('GitLabCredentials')
                     }
                     remote {
                         name('${gitlabSourceRepoName}')
                         url('${gitlabSourceRepoURL}')
-                        credentials('GitLabCredentials')
                     }
                     extensions {
                         wipeOutWorkspace()
