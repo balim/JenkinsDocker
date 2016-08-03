@@ -21,5 +21,6 @@ node('dockerhost') {
     stage name: 'Update local Jenkins JobDSL'
     input ('JobDSL has been updated, do you want to proceed with updating local instance with these changes?')
     sh([script: './generateJenkinsJobDSL.sh'])
-    step([$class: 'ExecuteDslScripts', scriptLocation: [targets: 'artifacts/multiscreen-job.dsl'], ignoreExisting: false, lookupStrategy: 'JENKINS_ROOT', removedJobAction: 'DISABLE', removedViewAction: 'DELETE'])
+    stash includes: 'artifacts/multiscreen-job.dsl', name: 'dsl'
+    step([$class: 'ExecuteDslScripts', scriptLocation: [scriptText: readFile('artifacts/multiscreen-job.dsl')], ignoreExisting: false, lookupStrategy: 'JENKINS_ROOT', removedJobAction: 'DISABLE', removedViewAction: 'DELETE'])
 }

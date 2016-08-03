@@ -1,4 +1,4 @@
-workflowJob('#{JOB_NAME}') {
+pipelineJob('#{JOB_NAME}') {
     displayName('#{JOB_DESCRIPTION}')
     definition {
         cpsScm {
@@ -30,7 +30,7 @@ workflowJob('#{JOB_NAME}') {
     }
 }
 
-workflowJob('#{JOB_NAME_BRANCH}') {
+pipelineJob('#{JOB_NAME_BRANCH}') {
     displayName('#{JOB_DESCRIPTION_BRANCH}')
     definition {
         cpsScm {

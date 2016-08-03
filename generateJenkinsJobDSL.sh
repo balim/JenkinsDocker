@@ -28,16 +28,29 @@ pushd $WORK_DIR &>/dev/null
 
         TMP_JOB_FILE="artifacts/${config}"
         cp $TEMPLATE_JOB_FILE $TMP_JOB_FILE
+        OS="`uname`"
+        # if on a mac - need to change command slightly
+        if [ "$OS" == "Darwin" ]; then
+            sed -i '' "s/#{JOB_NAME}/${JOB_NAME//\//\\/}/g" $TMP_JOB_FILE
+            sed -i '' "s/#{JOB_DESCRIPTION}/${JOB_DESCRIPTION//\//\\/}/g" $TMP_JOB_FILE
+            sed -i '' "s/#{JOB_GIT_URL}/${JOB_GIT_URL//\//\\/}/g" $TMP_JOB_FILE
+            sed -i '' "s/#{JOB_NAME_BRANCH}/${JOB_NAME_BRANCH//\//\\/}/g" $TMP_JOB_FILE
+            sed -i '' "s/#{JOB_DESCRIPTION_BRANCH}/${JOB_DESCRIPTION_BRANCH//\//\\/}/g" $TMP_JOB_FILE
 
-        sed -i "s/#{JOB_NAME}/${JOB_NAME//\//\\/}/g" $TMP_JOB_FILE
-        sed -i "s/#{JOB_DESCRIPTION}/${JOB_DESCRIPTION//\//\\/}/g" $TMP_JOB_FILE
-        sed -i "s/#{JOB_GIT_URL}/${JOB_GIT_URL//\//\\/}/g" $TMP_JOB_FILE
-        sed -i "s/#{JOB_NAME_BRANCH}/${JOB_NAME_BRANCH//\//\\/}/g" $TMP_JOB_FILE
-        sed -i "s/#{JOB_DESCRIPTION_BRANCH}/${JOB_DESCRIPTION_BRANCH//\//\\/}/g" $TMP_JOB_FILE
+            sed -i '' "s/#{MAJOR}/${MAJOR//\//\\/}/g" $TMP_JOB_FILE
+            sed -i '' "s/#{MINOR}/${MINOR//\//\\/}/g" $TMP_JOB_FILE
+            sed -i '' "s/#{PATCH}/${PATCH//\//\\/}/g" $TMP_JOB_FILE
+        else
+            sed -i "s/#{JOB_NAME}/${JOB_NAME//\//\\/}/g" $TMP_JOB_FILE
+            sed -i "s/#{JOB_DESCRIPTION}/${JOB_DESCRIPTION//\//\\/}/g" $TMP_JOB_FILE
+            sed -i "s/#{JOB_GIT_URL}/${JOB_GIT_URL//\//\\/}/g" $TMP_JOB_FILE
+            sed -i "s/#{JOB_NAME_BRANCH}/${JOB_NAME_BRANCH//\//\\/}/g" $TMP_JOB_FILE
+            sed -i "s/#{JOB_DESCRIPTION_BRANCH}/${JOB_DESCRIPTION_BRANCH//\//\\/}/g" $TMP_JOB_FILE
 
-        sed -i "s/#{MAJOR}/${MAJOR//\//\\/}/g" $TMP_JOB_FILE
-        sed -i "s/#{MINOR}/${MINOR//\//\\/}/g" $TMP_JOB_FILE
-        sed -i "s/#{PATCH}/${PATCH//\//\\/}/g" $TMP_JOB_FILE
+            sed -i "s/#{MAJOR}/${MAJOR//\//\\/}/g" $TMP_JOB_FILE
+            sed -i "s/#{MINOR}/${MINOR//\//\\/}/g" $TMP_JOB_FILE
+            sed -i "s/#{PATCH}/${PATCH//\//\\/}/g" $TMP_JOB_FILE
+        fi
 
         cat $TMP_JOB_FILE >> $MULTISCREEN_JOB_DSL_FILE
         echo "" >> $MULTISCREEN_JOB_DSL_FILE
