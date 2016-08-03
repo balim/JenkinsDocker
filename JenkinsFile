@@ -4,6 +4,14 @@ node('dockerhost') {
 
     def version = "${MAJOR}.${MINOR}.${PATCH}.${env.BUILD_NUMBER}"
 
+    stage name: 'Code Checkout'
+    checkout([$class                           : 'GitSCM',
+              branches                         : [[name: GIT_BRANCH]],
+              doGenerateSubmoduleConfigurations: false,
+              extensions                       : [[$class: 'WipeWorkspace']],
+              submoduleCfg                     : [],
+              userRemoteConfigs                : [[url: GIT_URL]]])
+
     stage name: 'Build Docker Container'
     docker.build("jenkinsdocker:${version}")
 
@@ -12,5 +20,6 @@ node('dockerhost') {
 
     stage name: 'Update local Jenkins JobDSL'
     input ('JobDSL has been updated, do you want to proceed with updating local instance with these changes?')
-    step([$class: ExecuteDslScripts, scriptLocation: [targets: 'artifacts/multiscreen-job.dsl'], ignoreExisting: false, lookupStrategy: 'JENKINS_ROOT', removedJobAction: 'DISABLE', removedViewAction: 'DELETE'])
+    sh([script: './generateJenkinsJobDSL.sh'])
+    step([$class: 'ExecuteDslScripts', scriptLocation: [targets: 'artifacts/multiscreen-job.dsl'], ignoreExisting: false, lookupStrategy: 'JENKINS_ROOT', removedJobAction: 'DISABLE', removedViewAction: 'DELETE'])
 }
