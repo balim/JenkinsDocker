@@ -59,16 +59,9 @@ pipelineJob('#{JOB_NAME_BRANCH}') {
         }
     }
     triggers {
-        gitlabPush {
-            buildOnMergeRequestEvents(true)
-            buildOnPushEvents(true)
-            enableCiSkip(false)
-            setBuildDescription(true)
-            addNoteOnMergeRequest(true)
-            rebuildOpenMergeRequest('both')
-            addVoteOnMergeRequest(false)
-            useCiFeatures(true)
-            allowAllBranches(true)
+        pullRequest {
+            cron('H/5 * * * *')
+            permitAll(true)
         }
     }
 }

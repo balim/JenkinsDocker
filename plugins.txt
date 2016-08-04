@@ -2,6 +2,7 @@ ace-editor:1.1
 ant:1.3
 antisamy-markup-formatter:1.5
 authentication-tokens:1.3
+bouncycastle-api:1.648.3
 branch-api:1.10
 cloudbees-folder:5.12
 conditional-buildstep:1.3.5
@@ -11,6 +12,7 @@ docker-commons:1.4.0
 docker-workflow:1.7
 durable-task:1.12
 external-monitor-job:1.6
+ghprb:1.33.1
 git-client:1.19.7
 git-server:1.7
 git:2.5.3
@@ -40,6 +42,7 @@ plain-credentials:1.2
 run-condition:1.0
 scm-api:1.2
 script-security:1.21
+ssh-agent:1.13
 ssh-credentials:1.12
 ssh-slaves:1.11
 structs:1.3
