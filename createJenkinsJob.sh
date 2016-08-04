@@ -16,7 +16,7 @@ pushd $WORK_DIR &>/dev/null
         echo "..Waiting for Jenkins to start.."
         sleep 1
     done
-    until java -jar /var/jenkins_home/war/WEB-INF/jenkins-cli.jar -s http://localhost:8080/ create-job Multiscreen-JobDSL --username admin --password-file /var/jenkins_home/secrets/initialAdminPassword < /opt/irdeto/multiscreen/jenkins/artifacts/multiscreen-seed-job.xml ; do
+    until java -jar /var/jenkins_home/war/WEB-INF/jenkins-cli.jar -s http://localhost:8080/ create-job Seed-JobDSL --username admin --password-file /var/jenkins_home/secrets/initialAdminPassword < /opt/irdeto/multiscreen/jenkins/artifacts/multiscreen-seed-job.xml ; do
         echo "..Jenkins is starting, waiting to retry seed job creation.."
         sleep 1
     done

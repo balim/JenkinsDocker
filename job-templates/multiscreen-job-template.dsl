@@ -16,6 +16,7 @@ pipelineJob('#{JOB_NAME}') {
                     branch('master')
                 }
             }
+            scriptPath('Jenkinsfile')
         }
     }
     parameters {
@@ -54,6 +55,7 @@ pipelineJob('#{JOB_NAME_BRANCH}') {
                     branch('${gitlabSourceRepoName}/${gitlabSourceBranch}')
                 }
             }
+            scriptPath('Jenkinsfile')
         }
     }
     triggers {
