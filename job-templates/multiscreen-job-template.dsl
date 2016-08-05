@@ -7,6 +7,7 @@ pipelineJob('#{JOB_NAME}') {
                     remote {
                         name('origin')
                         url('#{JOB_GIT_URL}')
+                        credentials('GitHubSSHCredentialsId')
                     }
                     extensions {
                         wipeOutWorkspace()
@@ -31,37 +32,27 @@ pipelineJob('#{JOB_NAME}') {
     }
 }
 
-pipelineJob('#{JOB_NAME_BRANCH}') {
+multibranchPipelineJob('#{JOB_NAME_BRANCH}') {
     displayName('#{JOB_DESCRIPTION_BRANCH}')
-    definition {
-        cpsScm {
-            scm {
-                git {
-                    remote {
-                        name('origin')
-                        url('#{JOB_GIT_URL}')
-                    }
-                    remote {
-                        name('${gitlabSourceRepoName}')
-                        url('${gitlabSourceRepoURL}')
-                    }
-                    extensions {
-                        wipeOutWorkspace()
-                        mergeOptions {
-                            remote('origin')
-                            branch('${gitlabTargetBranch}')
-                        }
-                    }
-                    branch('${gitlabSourceRepoName}/${gitlabSourceBranch}')
+    branchSources {
+        branchSource {
+            source {
+                gitHubSCMSource {
+                    repoOwner('Irdeto-Jenkins2')
+                    repository('#{JOB_NAME}')
+                    buildForkPRHead(false)
+                    buildForkPRMerge(false)
+                    buildOriginBranch(false)
+                    buildOriginBranchWithPR(false)
+                    buildOriginPRHead(false)
+                    buildOriginPRMerge(true)
+                    scanCredentialsId('GitHubTokenCredentialsId')
+                    checkoutCredentialsId('GitHubSSHCredentialsId')
+                    apiUri('')
+                    id('#{JOB_NAME_BRANCH}')
+                    includes('*')
                 }
             }
-            scriptPath('Jenkinsfile')
-        }
-    }
-    triggers {
-        pullRequest {
-            cron('H/5 * * * *')
-            permitAll(true)
         }
     }
 }
