@@ -14,7 +14,7 @@ RUN chmod -R 777 /opt/irdeto/multiscreen/jenkins/
 RUN ln -s /opt/irdeto/multiscreen/jenkins/createJenkinsJob.sh /usr/bin/createSeedJob
 RUN ln -s /opt/irdeto/multiscreen/jenkins/createJenkinsJob.sh /bin/createSeedJob
 
-RUN sed -i "33i\  eval \"exec nohup createSeedJob &\"" /usr/local/bin/jenkins.sh
+RUN sed -i "10i\  eval \"exec nohup createSeedJob &\"" /usr/local/bin/jenkins.sh
 
 USER jenkins
 
